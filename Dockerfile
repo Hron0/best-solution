@@ -19,7 +19,6 @@ RUN \
 
 # Set environment variables for build time (NEXT_PUBLIC_* variables)
 ARG DATABASE_URL
-ARG NEXT_PUBLIC_URL
 
 FROM base AS builder
 WORKDIR /app

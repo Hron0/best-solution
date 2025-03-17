@@ -6,6 +6,7 @@ import {notFound} from "next/navigation";
 import {Metadata} from "next";
 import {getItem} from "@/app/(pages)/expertises/(expDeatils)/[id]/getItem";
 import {isEmptyArray} from "is-what";
+import {getIds} from "@/app/(pages)/expertises/(expDeatils)/[id]/getId";
 
 export async function generateMetadata({
                                            params,
@@ -36,7 +37,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-    const expertises = await fetch(process.env["NEXT_PUBLIC_URL"] + '/api/expertises/all', {method: "GET"}).then((res) => res.json())
+    const expertises = await getIds()
 
     return expertises.map((item: any) => ({
         id: item.id.toString()
