@@ -7,7 +7,7 @@ docker build --build-arg DATABASE_URL="" --build-arg --tag prod . --platform lin
 > 
 > `DATABASE_URL` в билде нужен для SSG
 
-В 'Caddyfile' указать домен.
+В `Caddyfile` указать домен.
 
 ## Getting Started
 
