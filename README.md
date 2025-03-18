@@ -1,11 +1,13 @@
 [Next.js (v14)](https://nextjs.org) - [ShadCN-UI](https://ui.shadcn.com/docs/components/form) - [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/guides/queries) - [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - [Auth.JS (Next-Auth V5)](https://authjs.dev/getting-started/authentication/credentials) - [Drizzle ORM](https://orm.drizzle.team/docs/schemas).
 
-> Выполнять с корня директории, `.env.production.sample` заполнить Переменными как в `.env.sample`, ну либо поменять в `Dockerfile`.
-> 
-> `DATABASE_URL` в билде нужен для SSG
 ```
 docker build --build-arg DATABASE_URL="" --build-arg --tag prod . --platform linux/amd64
 ```
+> Выполнять с корня директории, `.env.production.sample` заполнить Переменными как в `.env.sample`, ну либо поменять в `Dockerfile`.
+> 
+> `DATABASE_URL` в билде нужен для SSG
+
+В 'Caddyfile' указать домен.
 
 ## Getting Started
 
