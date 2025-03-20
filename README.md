@@ -3,11 +3,21 @@
 ```
 docker build --build-arg DATABASE_URL="" --build-arg --tag prod . --platform linux/amd64
 ```
-> Выполнять с корня директории, `.env.production.sample` заполнить Переменными как в `.env.sample`, ну либо поменять в `Dockerfile`.
+> Выполнять с корня директории, `.env.production.sample` заполнить Переменными как в `.env.sample`.
 > 
 > `DATABASE_URL` в билде нужен для SSG
 
-В `Caddyfile` указать домен.
+В `Caddyfile` указать домен, `your-domain.com` просто заменить на ваш подключенный Домен.
+
+```
+docker-compose up -d
+```
+> Команду использовать с папки, где находятся `docker-compose` и `Caddyfile`. >Я обычно создаю отдельную директорию с названием "prod" и туда эти файлы пихаю.
+
+[!important]
+ 
+БД'шка от Neon, без ВПН на сайт не зайти, но сама по себе работает нормально.
+Для хранения файлов используется Vercel blob storage.
 
 ## Getting Started
 
