@@ -12,9 +12,12 @@ docker build --build-arg DATABASE_URL="" --build-arg --tag prod . --platform lin
 ```
 docker-compose up -d
 ```
-> Команду использовать с папки, где находятся `docker-compose` и `Caddyfile`. >Я обычно создаю отдельную директорию с названием "prod" и туда эти файлы пихаю.
+> Команду использовать с папки, где находятся `docker-compose` и `Caddyfile`.
 
-[!important]
+> Я обычно создаю отдельную директорию с названием "prod" и туда эти файлы пихаю.
+
+> [!important]
+> После установки `Caddy` через `sudo systemctl stop caddy` выключи процесс Caddy, т.к он занимает 80 порт. Убедиться что Caddy работает/не работает на нужно порту можно командой `sudo lsof -i :80`
  
 БД'шка от Neon, без ВПН на сайт не зайти, но сама по себе работает нормально.
 Для хранения файлов используется Vercel blob storage.
