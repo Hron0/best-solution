@@ -7,7 +7,7 @@ docker build --build-arg DATABASE_URL="" --tag prod . --platform linux/amd64
 > 
 > `DATABASE_URL` в билде нужен для SSG
 
-В `Caddyfile` указать домен, `your-domain.com` просто заменить на ваш подключенный Домен.
+В `Caddyfile` указать домен, `yourdomain.com` просто заменить на ваш подключенный Домен.
 
 ```
 docker-compose up -d
