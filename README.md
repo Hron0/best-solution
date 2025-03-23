@@ -1,27 +1,34 @@
 [Next.js (v14)](https://nextjs.org) - [ShadCN-UI](https://ui.shadcn.com/docs/components/form) - [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/guides/queries) - [Zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) - [Auth.JS (Next-Auth V5)](https://authjs.dev/getting-started/authentication/credentials) - [Drizzle ORM](https://orm.drizzle.team/docs/schemas).
 
+Перед сборкой:
+
+* `.env.production.sample` - Создать и заполнить переменными как в `.env.example`
+* `config/site.ts` - В поле `domain` указать домен
+* В `Caddyfile` указать домен, `yourdomain.com` просто заменить на ваш подключенный Домен.
+
+> [!important]
+> После установки `Caddy` через `sudo systemctl stop caddy`
+выключи процесс Caddy, т.к он занимает 80 порт. Убедиться что Caddy работает/не работает на нужно порту можно командой
+```sudo lsof -i :80```
+>
+
+Сборка:
+
 ```
 docker build --build-arg DATABASE_URL="" --tag prod . --platform linux/amd64
 ```
-> Выполнять с корня директории, `.env.production.sample` заполнить Переменными как в `.env.sample`.
+> Выполнять с корня директории.
 > 
 > `DATABASE_URL` в билде нужен для SSG
 
-В `Caddyfile` указать домен, `yourdomain.com` просто заменить на ваш подключенный Домен.
-
+Запуск:
 ```
 docker-compose up -d
 ```
 > Команду использовать с папки, где находятся `docker-compose` и `Caddyfile`.
-
+> 
 > Я обычно создаю отдельную директорию с названием "prod" и туда эти файлы пихаю.
 
-> [!important]
-> После установки `Caddy` через 
-```sudo systemctl stop caddy``` 
-выключи процесс Caddy, т.к он занимает 80 порт. Убедиться что Caddy работает/не работает на нужно порту можно командой
-```sudo lsof -i :80```
- 
 БД'шка от Neon, без ВПН на сайт не зайти, но сама по себе работает нормально.
 Для хранения файлов используется Vercel blob storage.
 
