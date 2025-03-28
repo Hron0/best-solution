@@ -18,7 +18,9 @@
 docker build --build-arg DATABASE_URL="" --tag prod . --platform linux/amd64
 ```
 > Выполнять с корня директории.
+> 
 > Если при билде ты застрял на моменте фетча node-alpine, добавь флаг `--network=host`
+> 
 > `DATABASE_URL` в билде нужен для SSG
 
 Запуск:
