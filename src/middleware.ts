@@ -50,4 +50,4 @@ export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 }
 
-export const runtime = "experimental-edge"
+// export const runtime = "experimental-edge"
