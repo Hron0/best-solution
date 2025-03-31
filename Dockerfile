@@ -1,55 +1,71 @@
-# Use Node.js LTS as the base image
 FROM node:22.1.0-alpine3.19 AS base
+WORKDIR /app
 
-# 1. Install dependencies only when needed
+# Dependencies stage - install all dependencies including dev dependencies
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed
 RUN apk add --no-cache libc6-compat
 
-WORKDIR /app
+# Copy package files
+COPY package.json package-lock.json* ./
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# Install dependencies
+RUN npm ci
 
-# Set environment variables for build time (NEXT_PUBLIC_* variables)
-ARG DATABASE_URL
-
+# Builder stage - build the application
 FROM base AS builder
 WORKDIR /app
+
+# Copy dependencies
 COPY --from=deps /app/node_modules ./node_modules
+
+# Copy all project files
 COPY . .
-# This will do the trick, use the corresponding env file for each environment.
+
+# Set build-time environment variables (NEXT_PUBLIC_* variables)
+ARG DATABASE_URL
+
+ARG NEXT_PUBLIC_URL
+
+COPY .env.production.sample .env
 COPY .env.production.sample .env.production
+COPY .env.production.sample .env.runtime
+
+# Build the application
 RUN npm run build
 
+# Runner stage - run the application
 FROM base AS runner
 WORKDIR /app
 
+# Set environment to production
 ENV NODE_ENV=production
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+# Create a non-root user for security
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
+# Copy only necessary files from the builder stage
 COPY --from=builder /app/public ./public
 
-#COPY --from=builder /app ./
-#COPY --from=builder /app/public ./public
-#COPY --from=builder /app/package.json ./package.json
-#COPY --from=builder /app/.next ./.next
-#COPY --from=builder /app/node_modules ./node_modules
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
+# Copy standalone output from .next/standalone
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Switch to non-root user
+USER nextjs
 
 # Expose the port the app runs on
 EXPOSE 3000
 
-ENV PORT=3000
+ENV DATABASE_URL=""
+ENV BLOB_READ_WRITE_TOKEN=""
+ENV NEXTAUTH_SECRET=""
+ENV RESEND_KEY=""
 
+# Start the application
 CMD ["node", "server.js"]
