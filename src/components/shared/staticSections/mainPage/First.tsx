@@ -1,9 +1,6 @@
 "use server"
 import * as React from 'react';
-import {Button} from "@/components/ui/button";
 import Image from "next/image";
-import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
-import {Separator} from "@/components/ui/separator";
 import EmailForm from "@/components/shared/staticSections/mainPage/EmailForm";
 
 export const First = async () => {
@@ -15,7 +12,7 @@ export const First = async () => {
 
                 <div className={"aspect-square w-1/3 relative z-40 bg-background rounded-full lg:hidden mb-2 md:mb-6"}>
                     <Image
-                        src={'/img/logo.svg'}
+                        src={'/img/logo.png'}
                         fill={true}
                         alt={"Логотип"}
                         className={'p-2'}

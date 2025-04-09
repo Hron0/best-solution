@@ -53,7 +53,7 @@ export const Navbar = () => {
                 className={"relative top-12 w-[208px] bg-background aspect-square rounded-md flex flex-col items-center justify-between shadow-xl"}>
                 <div className={"relative w-[115px] h-[100px] mt-2"}>
                     <Image
-                        src={'/img/logo.svg'}
+                        src={'/img/logo.png'}
                         fill
                         alt={"Логотип"}
                     />

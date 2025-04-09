@@ -14,7 +14,7 @@ export const Seventh = async () => {
                     className={"relative bg-background w-[80vw] lg:w-[1000px] aspect-square px-1 py-2 rounded-md flex flex-col items-center justify-start gap-2 shadow-xl text-black"}>
                     <div className={'relative w-[60%] aspect-square'}>
                         <Image
-                            src={'/img/logo.svg'}
+                            src={'/img/logo.png'}
                             fill
                             alt={"Логотип"}
                         />
