@@ -11,7 +11,7 @@ export const First = async () => {
 
                 <div className={"aspect-square w-1/3 relative z-40 bg-background rounded-full lg:hidden mb-2 md:mb-6"}>
                     <Image
-                        src={'/img/logo.svg'}
+                        src={'/img/logo.png'}
                         fill={true}
                         alt={"Логотип"}
                         className={'p-2'}
